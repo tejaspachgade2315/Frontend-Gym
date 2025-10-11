@@ -1,0 +1,85 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --background: 210 100% 98%;
+    --foreground: 220 40% 10%;
+
+    --card: 210 100% 97%;
+    --card-foreground: 220 40% 10%;
+
+    --popover: 210 100% 97%;
+    --popover-foreground: 220 40% 10%;
+
+    --primary: 220 80% 50%;
+    --primary-foreground: 210 100% 98%;
+
+    --secondary: 210 80% 85%;
+    --secondary-foreground: 220 40% 10%;
+
+    --muted: 210 40% 90%;
+    --muted-foreground: 220 15% 35%;
+
+    --accent: 210 80% 85%;
+    --accent-foreground: 220 40% 10%;
+
+    --destructive: 0 72% 45%;
+    --destructive-foreground: 210 100% 98%;
+
+    --border: 210 40% 85%;
+    --input: 210 40% 85%;
+    --ring: 220 80% 50%;
+
+    --radius: 0.5rem;
+  }
+
+  .dark {
+    --background: 220 40% 10%;
+    --foreground: 210 100% 98%;
+
+    --card: 220 40% 15%;
+    --card-foreground: 210 100% 98%;
+
+    --popover: 220 40% 15%;
+    --popover-foreground: 210 100% 98%;
+
+    --primary: 220 80% 60%;
+    --primary-foreground: 220 40% 15%;
+
+    --secondary: 220 40% 25%;
+    --secondary-foreground: 210 100% 98%;
+
+    --muted: 220 40% 25%;
+    --muted-foreground: 220 15% 65%;
+
+    --accent: 220 40% 25%;
+    --accent-foreground: 210 100% 98%;
+
+    --destructive: 0 62.8% 45%;
+    --destructive-foreground: 210 100% 98%;
+
+    --border: 220 40% 25%;
+    --input: 220 40% 25%;
+    --ring: 220 80% 60%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+.hide-accordion-icon .lucide-chevron-down {
+  display: none;
+}
+
+* {
+  pointer-events: auto !important;
+}
