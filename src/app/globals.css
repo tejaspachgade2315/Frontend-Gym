@@ -83,3 +83,8 @@
 * {
   pointer-events: auto !important;
 }
+
+.scrollbar-hide {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

@@ -146,7 +146,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       <SidebarHeader>
         <TeamSwitcher teams={teams} gym={gym} />
       </SidebarHeader>
-      <SidebarContent>
+      <SidebarContent className="scrollbar-hide">
         <SidebarNavigation sidebarItems={sidebarItems} />
       </SidebarContent>
       <SidebarFooter>

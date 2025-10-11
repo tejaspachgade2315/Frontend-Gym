@@ -1,7 +1,4 @@
 "use client";
-import { usePathname } from "next/navigation";
-import { ChevronRight } from "lucide-react";
-
 import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@/components/ui/collapsible";
 import {
   SidebarGroup,
@@ -14,6 +11,8 @@ import {
   SidebarMenuSubItem,
 } from "@/components/ui/sidebar";
 import { NavGroup } from "@/navigation/sidebar/sidebar-items";
+import { ChevronRight } from "lucide-react";
+import { usePathname } from "next/navigation";
 
 export default function SidebarNavigation({ sidebarItems }: { readonly sidebarItems: NavGroup[] }) {
   const pathname = usePathname();
@@ -24,8 +23,7 @@ export default function SidebarNavigation({ sidebarItems }: { readonly sidebarIt
           {navGroup.label && <SidebarGroupLabel>{navGroup.label}</SidebarGroupLabel>}
           <SidebarMenu>
             {navGroup.items.map((item) => {
-              const isActive = pathname === item.path; // Check if the current item is active
-
+              const isActive = pathname === item.path;
               return (
                 <Collapsible key={item.title} asChild defaultOpen={item.isActive} className="group/collapsible">
                   <SidebarMenuItem>
