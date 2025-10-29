@@ -24,7 +24,7 @@ export default function LoginForm() {
   const { toast } = useToast();
   const form = useForm<z.infer<typeof FormSchema>>({
     resolver: zodResolver(FormSchema),
-    defaultValues: { email: "", password: "" },
+    defaultValues: { email: "admin@ex.com", password: "Admin@1234" },
   });
 
   const router = useRouter();
@@ -120,7 +120,19 @@ export default function LoginForm() {
             </FormItem>
           )}
         />
-        <Button disabled={isLoading} className="w-full">
+        <div
+          role="status"
+          aria-live="polite"
+          className="text-center text-sm text-gray-700 bg-gray-100 px-3 py-2 rounded-md"
+        >
+          {isLoading
+            ? "First request takes a little bit of time — hold on..."
+            : "Click to login directly (demo credentials prefilled)"}
+        </div>
+        <Button
+          disabled={isLoading}
+          className="w-full"
+        >
           {isLoading ? <LoaderCircle className="mr-2 size-4 animate-spin" /> : "Login"}
         </Button>
       </form>

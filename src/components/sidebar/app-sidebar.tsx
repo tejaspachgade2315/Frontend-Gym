@@ -23,7 +23,7 @@ const user = {
 
 const teams = [
   {
-    name: "Aeons Gym",
+    name: "Iron Fist Gym",
     logo: GalleryVerticalEnd,
     plan: "Premium",
   },

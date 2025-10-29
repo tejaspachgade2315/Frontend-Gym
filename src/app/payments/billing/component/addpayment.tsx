@@ -111,7 +111,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ isOpen, handleClose, selected
       // Company details
       doc.setFontSize(12);
       doc.setFont("helvetica", "normal");
-      doc.text("Aeons Gym", 14, 30);
+      doc.text("Iron Fist Gym", 14, 30);
       doc.text("123, Business Street, City, Country", 14, 36);
       doc.text("Email: support@xyz.com", 14, 42);
       doc.text(`Date: ${formatToDDMMYYYY(new Date().toLocaleDateString())}`, 150, 30);
@@ -168,7 +168,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ isOpen, handleClose, selected
       // Footer
       startY += 20;
       doc.setFont("helvetica", "italic");
-      doc.text("Thanks for joining Aeons Gym!", 105, startY, { align: "center" });
+      doc.text("Thanks for joining Iron Fist Gym!", 105, startY, { align: "center" });
 
       // Save the PDF to a Blob
       const pdfBlob = doc.output("blob");
@@ -243,7 +243,7 @@ const PaymentForm: React.FC<PaymentFormProps> = ({ isOpen, handleClose, selected
       const result = await handleSend({
         phone: selectedPayment.phone,
         name: selectedPayment.name,
-        organization: "Aeons Gym",
+        organization: "Iron Fist Gym",
         invoice: pdfBlob,
       });
       // if (result === undefined) {
