@@ -1,12 +1,8 @@
 /* eslint-disable tailwindcss/enforces-shorthand */
 /* eslint-disable @next/next/no-img-element */
 "use client";
-import React, { useEffect, useMemo, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Pencil, Trash2 } from "lucide-react";
-import axios from "axios";
-import { getToken } from "@/lib/token";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -15,10 +11,15 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import EditEquipment from "./editEquiment";
+import { getToken } from "@/lib/token";
 import { formatToDDMMYYYY } from "@/utils/helper";
+import { FALLBACK_IMAGE, getSafeImageUrl } from "@/utils/image";
+import axios from "axios";
+import { Pencil, Trash2 } from "lucide-react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import Skeleton from "react-loading-skeleton";
-import "react-loading-skeleton/dist/skeleton.css";
+// import "react-loading-skeleton/dist/skeleton.css";
+import EditEquipment from "./editEquiment";
 
 const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm }) => {
   return (
@@ -42,13 +43,20 @@ const ConfirmDeleteModal = ({ isOpen, onClose, onConfirm }) => {
 };
 
 const GymEquipmentCard = ({ equipment, onDelete, onEditOpen }) => {
+  const [imgSrc, setImgSrc] = useState<string>(getSafeImageUrl(equipment?.image));
+
+  useEffect(() => {
+    setImgSrc(getSafeImageUrl(equipment?.image));
+  }, [equipment?.image]);
+
   return (
     <Card className="w-full max-w-sm shadow-lg rounded-2xl border border-gray-200 overflow-hidden transition hover:shadow-xl">
       <div className="relative w-full h-48 bg-gray-100">
         <img
-          src={equipment.image || "/fallback-image.jpg"}
+          src={imgSrc}
           alt={equipment.name}
           className="w-full h-full object-cover"
+          onError={() => setImgSrc(FALLBACK_IMAGE)}
         />
       </div>
       <CardHeader className="p-4">
@@ -119,6 +127,7 @@ export default function EquipmentList({ searchQuery }) {
   const [isEditOpen, setIsEditOpen] = useState(false);
   const [editId, setEditId] = useState(null);
   const [error, setError] = useState<string | null>(null);
+  const hasFetchedRef = useRef(false);
 
   // Fetch equipment from the API
   const fetchEquipment = async () => {
@@ -171,6 +180,8 @@ export default function EquipmentList({ searchQuery }) {
   };
 
   useEffect(() => {
+    if (hasFetchedRef.current) return;
+    hasFetchedRef.current = true;
     fetchEquipment();
   }, []);
 

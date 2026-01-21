@@ -2,18 +2,17 @@
 
 import * as React from "react";
 
-import { AudioWaveform, Command, Frame, GalleryVerticalEnd, Map, PieChart } from "lucide-react";
+import { GalleryVerticalEnd } from "lucide-react";
 
 import { TeamSwitcher } from "@/components/sidebar/team-switcher";
 import { Sidebar, SidebarContent, SidebarFooter, SidebarHeader, SidebarRail } from "@/components/ui/sidebar";
 import { sidebarItems } from "@/navigation/sidebar/sidebar-items";
 
+import { getToken } from "@/lib/token";
+import axios from "axios";
+import { useEffect, useState } from "react";
 import SidebarFooterMenu from "./sidebar-footer-menu";
 import SidebarNavigation from "./sidebar-navigation";
-import SidebarProjects from "./sidebar-projects";
-import { useEffect, useState } from "react";
-import axios from "axios";
-import { getToken } from "@/lib/token";
 
 const user = {
   name: "admin",
@@ -115,7 +114,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   };
   useEffect(() => {
     fetchadminData();
-  }, []);
+  });
   const [gym, setGym] = useState<GymProfile | null>(null);
   const fetchGymProfile = async () => {
     try {

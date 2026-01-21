@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription } from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import Image from "next/image";
-import { Facebook, Instagram, Twitter, X } from "lucide-react";
-import { getToken } from "@/lib/token";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton"; // Import Skeleton component
+import { getToken } from "@/lib/token";
+import axios from "axios";
+import { Facebook, Instagram, Twitter } from "lucide-react";
+import Image from "next/image";
+import React, { useEffect, useState } from "react";
 
 interface SocialMedia {
   facebook: string;
@@ -117,88 +116,128 @@ const GymProfileModal: React.FC<GymProfileModalProps> = ({ isOpen, onClose }) =>
   return (
     <>
       <Dialog open={isOpen} onOpenChange={onClose}>
-        <DialogContent className="max-w-lg md:max-w-2xl p-6 rounded-lg shadow-lg bg-white">
+        <DialogContent className="w-[95vw] max-w-4xl max-h-[90vh] overflow-y-auto scrollbar-hide p-4 sm:p-6 lg:p-8 rounded-2xl shadow-2xl bg-white">
           {loading ? (
-            <div className="space-y-4">
-              <Skeleton className="h-6 w-3/4" />
+            <div className="space-y-5">
+              <Skeleton className="h-7 w-2/3" />
               <Skeleton className="h-4 w-1/2" />
-              <Skeleton className="h-4 w-1/4" />
-              <div className="flex gap-4 overflow-x-auto py-2">
-                <Skeleton className="size-24 rounded-lg" />
-                <Skeleton className="size-24 rounded-lg" />
-                <Skeleton className="size-24 rounded-lg" />
+              <Skeleton className="h-4 w-1/3" />
+              <div className="grid grid-cols-3 sm:grid-cols-4 gap-3">
+                <Skeleton className="aspect-square rounded-xl" />
+                <Skeleton className="aspect-square rounded-xl" />
+                <Skeleton className="aspect-square rounded-xl" />
+                <Skeleton className="aspect-square rounded-xl hidden sm:block" />
               </div>
-              <Skeleton className="h-4 w-1/2" />
-              <Skeleton className="h-4 w-1/4" />
-              <Skeleton className="h-4 w-1/4" />
-              <div className="flex gap-4 mt-4">
-                <Skeleton className="size-6 rounded-full" />
-                <Skeleton className="size-6 rounded-full" />
-                <Skeleton className="size-6 rounded-full" />
+              <div className="grid grid-cols-2 gap-3">
+                <Skeleton className="h-4 w-3/4" />
+                <Skeleton className="h-4 w-2/3" />
+                <Skeleton className="h-4 w-1/2" />
+                <Skeleton className="h-4 w-2/3" />
               </div>
-              <Skeleton className="h-4 w-1/2 mt-6" />
-              <Skeleton className="h-4 w-1/4" />
-              <Skeleton className="h-4 w-1/4" />
+              <div className="flex gap-3">
+                <Skeleton className="size-8 rounded-full" />
+                <Skeleton className="size-8 rounded-full" />
+                <Skeleton className="size-8 rounded-full" />
+              </div>
+              <div className="grid grid-cols-2 gap-3">
+                <Skeleton className="h-4 w-2/3" />
+                <Skeleton className="h-4 w-1/2" />
+                <Skeleton className="h-4 w-2/3" />
+                <Skeleton className="h-4 w-1/2" />
+              </div>
             </div>
           ) : (
             <>
               <DialogHeader>
-                <DialogTitle className="text-xl md:text-2xl font-bold text-gray-900">{gym?.name}</DialogTitle>
-                <DialogDescription className="text-gray-600">{gym?.address}</DialogDescription>
-                <p className="text-sm text-gray-500">Owner: {gym?.owner.name}</p>
+                <DialogTitle className="text-xl sm:text-2xl lg:text-3xl font-semibold tracking-tight text-gray-900">
+                  {gym?.name}
+                </DialogTitle>
+                <DialogDescription className="text-sm sm:text-base text-gray-600">{gym?.address}</DialogDescription>
+                <p className="text-xs sm:text-sm text-gray-500">Owner: {gym?.owner.name}</p>
               </DialogHeader>
 
               {/* Gym Images */}
-              <div className="flex gap-4 overflow-x-auto py-2">
+              <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
                 {gym?.image.map((img, index) => (
-                  <button key={index} onClick={() => setSelectedImage(img)} className="focus:outline-none">
+                  <button
+                    key={index}
+                    onClick={() => setSelectedImage(img)}
+                    className="group relative overflow-hidden rounded-xl border border-gray-100 bg-gray-50 focus:outline-none focus:ring-2 focus:ring-gray-900/20"
+                  >
                     <Image
                       src={img}
                       alt={`Gym Image ${index}`}
-                      width={120}
-                      height={120}
-                      className="rounded-lg shadow-md object-cover cursor-pointer hover:scale-105 transition"
+                      width={320}
+                      height={320}
+                      className="aspect-square w-full object-cover transition duration-300 group-hover:scale-105"
                     />
+                    <span className="pointer-events-none absolute inset-0 bg-black/0 group-hover:bg-black/10 transition" />
                   </button>
                 ))}
               </div>
 
               {/* Contact Info */}
-              <div className="mt-4 space-y-2 text-sm">
-                <p>
-                  <strong>Phone:</strong> {gym?.phone}
-                </p>
-                <p>
-                  <strong>Email:</strong> {gym?.email}
-                </p>
-                <p>
-                  <strong>Website:</strong>{" "}
-                  <a href={gym?.website} target="_blank" rel="noopener noreferrer" className="text-blue-500 underline">
-                    Visit
+              <div className="mt-5 grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
+                <div className="rounded-xl border border-gray-100 p-4">
+                  <p className="text-xs text-gray-500">Phone</p>
+                  <p className="font-medium text-gray-900">{gym?.phone}</p>
+                </div>
+                <div className="rounded-xl border border-gray-100 p-4">
+                  <p className="text-xs text-gray-500">Email</p>
+                  <p className="font-medium text-gray-900 break-all">{gym?.email}</p>
+                </div>
+                <div className="rounded-xl border border-gray-100 p-4 sm:col-span-2">
+                  <p className="text-xs text-gray-500">Website</p>
+                  <a
+                    href={gym?.website}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-medium text-blue-600 hover:text-blue-700 underline underline-offset-4"
+                  >
+                    {gym?.website || "Visit"}
                   </a>
-                </p>
+                </div>
               </div>
 
               {/* Social Media Links */}
-              <div className="flex gap-4 mt-4">
-                <a href={gym?.socialMedia.facebook} target="_blank" rel="noopener noreferrer">
-                  <Facebook className="text-blue-600 size-6" />
+              <div className="flex flex-wrap gap-3 mt-5">
+                <a
+                  href={gym?.socialMedia.facebook}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center size-10 rounded-full border border-gray-200 text-blue-600 hover:bg-blue-50 transition"
+                >
+                  <Facebook className="size-5" />
                 </a>
-                <a href={gym?.socialMedia.instagram} target="_blank" rel="noopener noreferrer">
-                  <Instagram className="text-pink-600 size-6" />
+                <a
+                  href={gym?.socialMedia.instagram}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center size-10 rounded-full border border-gray-200 text-pink-600 hover:bg-pink-50 transition"
+                >
+                  <Instagram className="size-5" />
                 </a>
-                <a href={gym?.socialMedia.twitter} target="_blank" rel="noopener noreferrer">
-                  <Twitter className="text-blue-400 size-6" />
+                <a
+                  href={gym?.socialMedia.twitter}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center justify-center size-10 rounded-full border border-gray-200 text-blue-500 hover:bg-blue-50 transition"
+                >
+                  <Twitter className="size-5" />
                 </a>
               </div>
 
               {/* Opening Hours */}
               <div className="mt-6">
-                <h3 className="text-lg font-semibold">Opening Hours</h3>
-                <ul className="text-sm text-gray-700 grid grid-cols-2 gap-1">
+                <h3 className="text-base sm:text-lg font-semibold text-gray-900">Opening Hours</h3>
+                <ul className="mt-3 grid grid-cols-1 sm:grid-cols-2 gap-2 text-sm text-gray-700">
                   {Object.entries(gym?.openingHours || {}).map(([day, hours]) => (
-                    <li key={day}>
-                      {day.charAt(0).toUpperCase() + day.slice(1)}: {hours}
+                    <li
+                      key={day}
+                      className="flex items-center justify-between rounded-lg border border-gray-100 px-3 py-2"
+                    >
+                      <span className="capitalize text-gray-600">{day}</span>
+                      <span className="font-medium text-gray-900">{hours}</span>
                     </li>
                   ))}
                 </ul>
@@ -210,7 +249,7 @@ const GymProfileModal: React.FC<GymProfileModalProps> = ({ isOpen, onClose }) =>
 
       {/* Image Modal */}
       <Dialog open={!!selectedImage} onOpenChange={() => setSelectedImage(null)}>
-        <DialogContent className="w-full max-w-3xl p-4 rounded-lg bg-white shadow-lg">
+        <DialogContent className="w-[95vw] max-w-5xl max-h-[90vh] overflow-y-auto scrollbar-hide p-4 sm:p-6 rounded-2xl bg-white shadow-2xl">
           {selectedImage && (
             <div className="flex justify-center items-center">
               <Image
@@ -218,7 +257,7 @@ const GymProfileModal: React.FC<GymProfileModalProps> = ({ isOpen, onClose }) =>
                 alt="Selected Gym Image"
                 width={800}
                 height={600}
-                className="max-w-full max-h-[80vh] object-contain rounded-lg"
+                className="max-w-full max-h-[80vh] object-contain rounded-xl"
               />
             </div>
           )}
